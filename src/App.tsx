@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import Searchbox from './components/Searchbox';
+import TodoList from './components/TodoList';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App: React.FC = () => {
+	const [todo, setTodo] = useState<string>('');
+	const [todoList, setTodoList] = useState<string[]>([]);
+
+	const handleAdd = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		setTodoList([...todoList, todo]);
+		setTodo('');
+	};
+
+	return (
+		<div className='App'>
+			<h1 className='heading'>To-Do App</h1>
+			<Searchbox todo={todo} setTodo={setTodo} handleAdd={handleAdd} />
+			<TodoList todoList={todoList} setTodoList={setTodoList} />
+		</div>
+	);
+};
 
 export default App;
